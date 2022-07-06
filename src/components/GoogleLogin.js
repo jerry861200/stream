@@ -1,8 +1,21 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef ,useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux/es/exports";
+
+import { signIn, signOut } from "../store/signInSlice";
 
 const GoogleLogin = () => {
-  const [isSignedIn, setIsSignedIn] = useState(null);
+	const isSignedIn = useSelector(state => state.signIn.isSignedIn);
+	const dispatch = useDispatch();
   let ref = useRef();
+
+	const onAuthChange = useCallback((isSignedIn) => {
+    if(isSignedIn){
+			dispatch(signIn())
+		}else{
+			dispatch(signOut())
+		}
+  }, [dispatch]);
+	//Google API
   useEffect(() => {
     function start() {
       window.gapi.client
@@ -17,7 +30,7 @@ const GoogleLogin = () => {
           // Execute an API request which is returned as a Promise.
           // The method name language.translations.list comes from the API discovery.
           ref.current = window.gapi.auth2.getAuthInstance();
-          setIsSignedIn(ref.current.isSignedIn.get());
+          onAuthChange(ref.current.isSignedIn.get());
           ref.current.isSignedIn.listen(onAuthChange);
         });
     }
@@ -26,16 +39,13 @@ const GoogleLogin = () => {
     window.gapi.load("client:auth2", start);
   }, []);
 
-  const onAuthChange = () => {
-    setIsSignedIn(ref.current.isSignedIn.get());
-  };
+  
 
   const onSignInClick = () => {
     ref.current.signIn();
   };
 
   const onSignOutClick = () => {
-		console.log(ref.current)
     ref.current.signOut();
   };
   const renderAuthButton = () => {
