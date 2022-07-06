@@ -1,15 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-	isSignedIn: null
+	isSignedIn: null,
+	userId: null,
 }
 
 const signInSlice = createSlice({
 	name: 'signIn',
 	initialState,
 	reducers:{
-		signIn(state){
+		signIn(state, action){
 			state.isSignedIn = true;
+			state.userId = action.payload;
 		},
 		signOut(state){
 			state.isSignedIn = false;

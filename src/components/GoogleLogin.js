@@ -10,7 +10,7 @@ const GoogleLogin = () => {
 
 	const onAuthChange = useCallback((isSignedIn) => {
     if(isSignedIn){
-			dispatch(signIn())
+			dispatch(signIn(ref.current.currentUser.get().getId()))
 		}else{
 			dispatch(signOut())
 		}
