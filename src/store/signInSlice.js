@@ -15,6 +15,7 @@ const signInSlice = createSlice({
 		},
 		signOut(state){
 			state.isSignedIn = false;
+			state.userId = null;
 		},
 	}
 })
