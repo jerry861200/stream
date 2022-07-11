@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import streams from "../apis/stream";
+import history from "../history";
 
 const streamSlice = createSlice({
   name: "stream",
   initialState: {
-		stream: null,
+		stream: [],
 	},
   reducers: {
     createStream: (state, {payload}) => {
@@ -36,9 +37,11 @@ export const {
 
 export default streamSlice.reducer;
 
-export const asyncCreateStream = (formValues) => async (dispatch) => {
-  const response = await streams.post("/streams", formValues);
+export const asyncCreateStream = (formValues) => async (dispatch, getState) => {
+	const {userId} = getState().signIn;
+  const response = await streams.post("/streams", {...formValues, userId});
   dispatch(createStream(response.data));
+	history.push('/');
 };
 
 export const asyncFetchStreams = () => async (dispatch) => {
