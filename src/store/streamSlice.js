@@ -60,6 +60,6 @@ export const asyncDeleteStream = (id) => async (dispatch) => {
 };
 
 export const asyncEditStream = (id, formValues) => async (dispatch) => {
-  const response = await streams.put(`/streams/${id}`, formValues);
+  const response = await streams.patch(`/streams/${id}`, formValues);
   dispatch(editStream(response.data));
 };
