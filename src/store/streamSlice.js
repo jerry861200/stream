@@ -22,7 +22,7 @@ const streamSlice = createSlice({
       state.stream[payload.id] = payload;
     },
     deleteStream: (state, {payload}) => {
-      state.stream[payload.id] = undefined;
+      state.stream = state.stream.filter(item => item.id !== payload.id)
     },
   },
 });
@@ -57,6 +57,7 @@ export const asyncFetchStream = (id) => async (dispatch) => {
 export const asyncDeleteStream = (id) => async (dispatch) => {
   await streams.delete(`/streams/${id}`);
   dispatch(deleteStream(id));
+	history.push('/');
 };
 
 export const asyncEditStream = (id, formValues) => async (dispatch) => {
