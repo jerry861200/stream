@@ -37,7 +37,7 @@ const GoogleLogin = () => {
 
     // Load the JavaScript client library and invoke start afterwards.
     window.gapi.load("client:auth2", start);
-  }, []);
+  }, [onAuthChange]);
 
   
 

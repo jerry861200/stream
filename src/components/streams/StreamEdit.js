@@ -11,7 +11,7 @@ const StreamEdit = ({ match }) => {
   const stream = useSelector((state) => state.stream.stream[streamId]);
   useEffect(() => {
     dispatch(asyncFetchStream(streamId));
-  }, []);
+  }, [dispatch, streamId]);
 
   const onSubmit = (formValues) => {
     dispatch(asyncEditStream(streamId, formValues));
