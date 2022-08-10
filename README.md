@@ -2,7 +2,7 @@
 
 ## 開啟一專案為 RTMP Server
     $ npm init
-		$ npm i node-media-server
+    $ npm i node-media-server
 
 ```javascript
 const NodeMediaServer = require('node-media-server');
